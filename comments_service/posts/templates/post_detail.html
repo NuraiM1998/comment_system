@@ -7,13 +7,13 @@
                 <p>{{ post.body }}</p>
                 <p>{{ post.date_pub }}</p>
 
-                {% for comment in comments %}
+                {% for comment in post.comments.all %}
                     {{ comment.content }}
                     {{ comment.timestamp }}
                 {% endfor %}
                 <div class="mb-4"></div>
 
-                <form action="{% url 'comments:create_comment' %}" method="post">
+                <form action="{% url 'comments:create_comment' post_id=post.pk %}" method="post">
                         {% csrf_token %}
                         {{ comment_form }}
                     <input type="submit" value='Оставить комментарий'>

@@ -26,3 +26,8 @@ class Comment(models.Model):
     
     def __str__(self):
         return self.content
+
+    
+    def get_absolute_url(self):
+        """Путь к одному объекту модели Post"""
+        return reverse('comments:create_comment', kwargs={'pk': self.pk})

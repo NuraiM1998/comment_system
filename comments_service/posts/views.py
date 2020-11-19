@@ -28,31 +28,15 @@ class PostDetail(DetailView):
     success_url = reverse_lazy('posts:list')
 
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
-
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        slug = self.kwargs.get('slug', None)
-        post = Post.objects.get(slug=slug)
-        comments = Comment.objects.filter(post=post)
         comment_form = CommentForm(user=self.request.user,
-                                    initial={
-                                        'user': self.request.user, 
-                                        })
-        context = {
-            'post': post,
-            'comments': comments,
-            'comment_form': comment_form
-        }
+                                    post_id=None)
+        context['post'] = self.get_object
+        context['comment_form'] = comment_form 
         return context
 
 
     def form_valid(self, form):
-        model_instance = form.save(commit=False)
-        model_instance.post = self.object
-        model_instance.save()
+        form.save()
         return redirect(self.success_url)
