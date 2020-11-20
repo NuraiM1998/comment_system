@@ -8,6 +8,8 @@ from comments.forms import CommentForm
 from faker import Faker
 from . import factories
 import pytest
+from django.test import RequestFactory
+from posts.views import PostList
 
 
 
@@ -29,3 +31,13 @@ def test_example_form(db, user, content, post_id, validity):
     })
 
     assert form.is_valid() is validity
+
+
+def test_reqfactory(db):
+    factory = RequestFactory()
+    request = factory.get('posts/')
+    request.user = User.objects.create_user('username', 
+                                        'user@mail.com', 
+                                        'pass')
+    response = PostList.as_view()(request)
+    assert 200 == response.status_code
