@@ -14,11 +14,6 @@ class CommentCreate(CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        print('KWARGS >>>', kwargs)
-        print('KWARGS dir >>>', dir(kwargs))
         kwargs['user'] = self.request.user
         kwargs['post_id'] = self.kwargs.get('post_id')
-        print('KWARGS AFTER >>>', kwargs)
-        print('KWARGS dir AFTER >>>', dir(kwargs))
-
         return kwargs

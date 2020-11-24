@@ -1,8 +1,9 @@
-import factory
+
 from django.contrib.auth.models import User
-from comments.models import Comment
 import datetime
+from comments.models import Comment
 from posts.tests.factories import PostFactory
+import factory
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -11,9 +12,15 @@ class UserFactory(factory.django.DjangoModelFactory):
         model = User
 
     username = factory.Faker('name')
-    first_name = factory.Sequence(lambda n: 'Nurai{0}'.format(n))
-    last_name = factory.Sequence(lambda n: 'Maratova{0}'.format(n))
-    email = factory.Sequence(lambda n: 'email{0}@gmail.com'.format(n))
+    first_name = factory.Sequence(
+                    lambda n: 'Nurai{0}'.format(n)
+                )
+    last_name = factory.Sequence(
+                    lambda n: 'Maratova{0}'.format(n)
+                )
+    email = factory.Sequence(
+                    lambda n: 'email{0}@gmail.com'.format(n)
+                )
 
 
 class CommentFactory(factory.django.DjangoModelFactory):

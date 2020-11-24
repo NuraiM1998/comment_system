@@ -15,8 +15,6 @@ class CommentForm(forms.ModelForm):
 
     def save(self, commit=True):
         comment = super().save(commit=False)
-        print('COMMENT >>>>>>',comment)
-        print('COMMENT DIR >>>>>>',dir(comment))
         comment.user = self.user
         comment.post_id = self.post_id
         
@@ -33,5 +31,7 @@ class CommentForm(forms.ModelForm):
             'content'
         ]
         widgets = {
-            'content': forms.Textarea(attrs={'class': 'form-control'})
+            'content': forms.Textarea(
+                attrs={'class': 'form-control'}
+            )
         }

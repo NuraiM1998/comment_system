@@ -1,16 +1,14 @@
 '''Testing Comments'''
-from datetime import datetime
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.test import RequestFactory
+from datetime import datetime
+from faker import Faker
+from posts.views import PostList
 from comments.models import Comment
 from comments.forms import CommentForm
-
-from faker import Faker
 from . import factories
 import pytest
-from django.test import RequestFactory
-from posts.views import PostList
-
 
 
 @pytest.mark.parametrize(
@@ -24,11 +22,13 @@ def test_example_form(db, user, content, post_id, validity):
     comment = factories.CommentFactory()
     comment_user = comment.user
     comment_post_id = comment.post_id
-    form = CommentForm(user=comment_user, post_id=comment_post_id, data={
-        'user': user,         
-        'content': content,
-        'post_id': comment_post_id
-    })
+    form = CommentForm(user=comment_user, 
+                        post_id=comment_post_id, 
+                        data={
+                            'user': user,         
+                            'content': content,
+                            'post_id': comment_post_id
+                        })
 
     assert form.is_valid() is validity
 
