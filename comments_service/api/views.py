@@ -3,22 +3,14 @@ from rest_framework.generics import (
 )
 from rest_framework.mixins import ListModelMixin
 from posts.models import Post
-from .serializers import PostSerializer
+from comments.models import Comment
+from .serializers import PostSerializer, CommentSerializer
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework import mixins
 
-
-
-# class PostCreateAPIView(ListModelMixin, 
-#                         CreateAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
-
-#     def get(self, request, *args, **kwargs):
-#         return self.list(request, *args, **kwargs)
 
 class PostViewSet(viewsets.ModelViewSet):
 
@@ -49,3 +41,16 @@ class PostViewSet(viewsets.ModelViewSet):
         # instance = self.get_object()
         # self.perform_destroy(instance)
         # return Response(status=status.HTTP_204_NO_CONTENT)
+
+class CommentViewSet(viewsets.ModelViewSet):
+
+    queryset = Comment.objects.select_related('post')
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        post_slug = self.kwargs.get("slug")
+        try:
+            post = Post.objects.get(slug=post_slug)
+        except Post.DoesNotExist:
+            pass
+        return self.queryset.filter(post=post)
