@@ -27,12 +27,25 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
 
 
-    def list(self, request):
-        serializer = PostSerializer(self.queryset, many=True)
-        return Response(serializer.data)
+    # def list(self, request):
+    #     serializer = PostSerializer(self.queryset, many=True)
+    #     return Response(serializer.data)
     
     
-    def retrieve(self, request, slug):
-        post = get_object_or_404(Post, slug=slug)
-        serializer = PostSerializer(post)
-        return Response(serializer.data)
+    # def retrieve(self, request, slug):
+    #     post = get_object_or_404(Post, slug=slug)
+    #     serializer = PostSerializer(post)
+    #     return Response(serializer.data)
+
+    
+    # def destroy(self, request, *args, **kwargs):
+    #     try:
+    #         post = self.get_object()
+    #         self.perform_destroy(post)
+    #     except Http404:
+    #         pass
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
+
+        # instance = self.get_object()
+        # self.perform_destroy(instance)
+        # return Response(status=status.HTTP_204_NO_CONTENT)
