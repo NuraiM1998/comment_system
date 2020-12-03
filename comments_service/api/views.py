@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework import mixins
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -17,12 +18,14 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     lookup_field = 'slug'
     serializer_class = PostSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class CommentViewSet(viewsets.ModelViewSet):
 
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
     def get_queryset(self):
