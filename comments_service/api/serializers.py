@@ -14,17 +14,21 @@ class UserSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
 
+    url = serializers.HyperlinkedIdentityField(
+        view_name='post_api:post-detail',
+        lookup_field='slug'
+    )
+
     class Meta:
         model = Post
-        fields = ['title', 'slug', 'body', 'date_pub']
+        fields = ['url', 'title', 'slug', 'body', 'date_pub']
         read_only_fields = ['slug']
 
 
 class CommentSerializer(serializers.ModelSerializer):
 
-    user = UserSerializer
-    post = PostSerializer
+
     class Meta:
         model = Comment
-        fields = ['id', 'user', 'content', 'post']
+        fields = ['id', 'content', 'post']
         read_only_fields = ['user', 'post']
