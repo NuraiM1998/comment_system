@@ -2,3 +2,13 @@ env/
 .env
 /.vscode
 __pycache__/
+comments_service/comments/tests/__init__.pyc
+comments_service/posts/__init__.pyc
+comments_service/api/tests/__init__.pyc
+comments_service/comments/__init__.pyc
+comments_service/comments_service/__pycache__/settings.cpython-38.pyc
+comments_service/posts/tests/__init__.pyc
+venv/
+ENV/
+env.bak/
+venv.bak/
