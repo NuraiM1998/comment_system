@@ -24,6 +24,11 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ['url', 'title', 'slug', 'body', 'date_pub']
         read_only_fields = ['slug']
 
+class FavoritePostSerializer(UserSerializer):
+
+    class Meta(UserSerializer.Meta):
+        fields = ['favorite_set']
+
 
 class CommentSerializer(serializers.ModelSerializer):
 

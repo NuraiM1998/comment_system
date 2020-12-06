@@ -1,14 +1,13 @@
 FROM python:3
 
-ENV PYTHONUNBUFFERED 1
-
-WORKDIR /comments_service
-
-ADD . /comments_service
+ENV PYTHONUNBUFFERED 1 
 
 COPY ./requirements.txt /comments_service/requirements.txt
 
 RUN pip install -r requirements.txt
+WORKDIR /comments_service
 
-CMD [ "python", "./manage.py runserver 0.0.0.0:8000" ]
+ADD . /comments_service
+
+
 

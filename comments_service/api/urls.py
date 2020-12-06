@@ -17,5 +17,6 @@ urlpatterns = [
         name='post-comment-list'),
     path('posts/<slug:slug>/comments/<int:pk>/', 
         CommentViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), 
-        name='post-comment-detail')
+        name='post-comment-detail'),
+    path('posts/favorites/', PostViewSet.as_view({'get': 'favorite'}))
 ]

@@ -4,7 +4,7 @@ from rest_framework.generics import (
 from rest_framework.mixins import ListModelMixin
 from posts.models import Post
 from comments.models import Comment
-from .serializers import PostSerializer, CommentSerializer
+from .serializers import PostSerializer, CommentSerializer, FavoritePostSerializer
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
@@ -17,9 +17,22 @@ class PostViewSet(viewsets.ModelViewSet):
 
     queryset = Post.objects.all()
     lookup_field = 'slug'
-    serializer_class = PostSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+
+    def get_serializer_class(self):
+        print(self.action)
+        if self.action == 'favorite':
+            return FavoritePostSerializer
+        return PostSerializer
+
+    def favorite(self, request):
+        print("favorite")
+        print('>>>>>>', request.user)
+        # serializer = self.get_serializer(instance=request.user)
+        # print('>>>>>>', serializer.data)
+        return Response({})
+    
 
 class CommentViewSet(viewsets.ModelViewSet):
 
