@@ -11,12 +11,16 @@ router.register('posts', PostViewSet, basename='post')
 
 
 urlpatterns = [
-    path('', include(router.urls)),
     path('posts/<slug:slug>/comments/', 
         CommentViewSet.as_view({'get': 'list', 'post': 'create'}), 
         name='post-comment-list'),
     path('posts/<slug:slug>/comments/<int:pk>/', 
         CommentViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), 
         name='post-comment-detail'),
-    path('posts/favorites/', PostViewSet.as_view({'get': 'favorite'}))
+    path('posts/favorites/', PostViewSet.as_view({'get': 'favorite'}), 
+        name='post_bookmark'),
+    path('posts/favorites/add', PostViewSet.as_view({'post': 'add_to_favorite'}), 
+        name='post_bookmark_add')
 ]
+
+urlpatterns += router.urls

@@ -14,7 +14,7 @@ class PostList(ListView):
 
 
     def get_queryset(self):
-        return Post.objects.order_by('date_pub').reverse()
+        return Post.objects.order_by('-date_pub')
 
 
 class PostDetail(DetailView):
@@ -35,8 +35,3 @@ class PostDetail(DetailView):
         context['post'] = self.get_object
         context['comment_form'] = comment_form 
         return context
-
-
-    def form_valid(self, form):
-        form.save()
-        return redirect(self.success_url)

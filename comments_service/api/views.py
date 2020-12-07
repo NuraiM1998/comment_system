@@ -4,7 +4,7 @@ from rest_framework.generics import (
 from rest_framework.mixins import ListModelMixin
 from posts.models import Post
 from comments.models import Comment
-from .serializers import PostSerializer, CommentSerializer, FavoritePostSerializer
+from .serializers import PostSerializer, CommentSerializer, FavoritePostSerializer, AddPostFavoriteSerializer
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
@@ -24,15 +24,22 @@ class PostViewSet(viewsets.ModelViewSet):
         print(self.action)
         if self.action == 'favorite':
             return FavoritePostSerializer
+        elif self.action == 'add_to_favorite':
+            return AddPostFavoriteSerializer
         return PostSerializer
 
+
     def favorite(self, request):
-        print("favorite")
-        print('>>>>>>', request.user)
-        # serializer = self.get_serializer(instance=request.user)
-        # print('>>>>>>', serializer.data)
-        return Response({})
+        serializer = self.get_serializer(instance=request.user)
+        return Response(serializer.data)
     
+
+    def add_to_favorite(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class CommentViewSet(viewsets.ModelViewSet):
 
