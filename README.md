@@ -4,8 +4,8 @@
 Также есть возможность добавлять посты в избранное в апи.
 
 Для запуска проекта использовать эту команду
-docker-compose up -d --build
+```docker-compose up -d --build```
 
 
 Для просмотра логов использовать эту команду
-docker-compose logs -f
+```docker-compose logs -f```
