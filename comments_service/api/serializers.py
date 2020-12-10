@@ -12,17 +12,29 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username']
 
 
+# class MyField(serializers.Field):
+#     def to_representation(self, value):
+#         return value.strftime("%b %d %Y %H:%M:%S")
+
+
 class PostSerializer(serializers.ModelSerializer):
 
     url = serializers.HyperlinkedIdentityField(
         view_name='post_api:post-detail',
         lookup_field='slug'
     )
+    
+    # date_pub = MyField()
 
     class Meta:
         model = Post
         fields = ['url', 'title', 'slug', 'body', 'date_pub']
         read_only_fields = ['slug']
+
+
+    def get_date_pub(self, value):
+        return value.strftime("%b %d %Y %H:%M:%S")
+
 
 
 class FavoritePostSerializer(UserSerializer):
@@ -42,13 +54,15 @@ class FavoritePostSerializer(UserSerializer):
 
 
 class AddPostFavoriteSerializer(serializers.Serializer):
-    
+
     post_slug = serializers.CharField(min_length=1)
+
 
     def validate_post_slug(self, post_slug):
         if not Post.objects.filter(slug=post_slug).exists():
             raise serializers.ValidationError("Post doesn't exist")
         return post_slug
+
 
     def save(self):
         post_slug = self.validated_data['post_slug']
@@ -56,6 +70,18 @@ class AddPostFavoriteSerializer(serializers.Serializer):
         request = self.context.get('request')
         user = request.user
         user.favorite_set.add(post)
+
+
+class DeletePostFavoriteSerializer(AddPostFavoriteSerializer):
+
+
+    def save(self):
+        super().save()
+        post_slug = self.validated_data['post_slug']
+        post = Post.objects.get(slug=post_slug)
+        request = self.context.get('request')
+        user = request.user
+        user.favorite_set.remove(post)
 
 
 class CommentSerializer(serializers.ModelSerializer):

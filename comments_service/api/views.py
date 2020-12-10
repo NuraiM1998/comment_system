@@ -4,16 +4,23 @@ from rest_framework.generics import (
 from rest_framework.mixins import ListModelMixin
 from posts.models import Post
 from comments.models import Comment
-from .serializers import PostSerializer, CommentSerializer, FavoritePostSerializer, AddPostFavoriteSerializer
+from .serializers import (
+    PostSerializer, 
+    CommentSerializer, 
+    FavoritePostSerializer, 
+    AddPostFavoriteSerializer,
+    DeletePostFavoriteSerializer
+)    
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .mixins import ActionFavoriteMixin
 
 
-class PostViewSet(viewsets.ModelViewSet):
+class PostViewSet(ActionFavoriteMixin, viewsets.ModelViewSet):
 
     queryset = Post.objects.all()
     lookup_field = 'slug'
@@ -26,6 +33,8 @@ class PostViewSet(viewsets.ModelViewSet):
             return FavoritePostSerializer
         elif self.action == 'add_to_favorite':
             return AddPostFavoriteSerializer
+        elif self.action == 'delete_from_favorite':
+            return DeletePostFavoriteSerializer
         return PostSerializer
 
 
@@ -35,10 +44,13 @@ class PostViewSet(viewsets.ModelViewSet):
     
 
     def add_to_favorite(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        super().action_with_favorite(request) 
+        return Response(request.data)                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+    
+    def delete_from_favorite(self, request):
+        super().action_with_favorite(request)
+        return Response(request.data)      
 
 
 class CommentViewSet(viewsets.ModelViewSet):

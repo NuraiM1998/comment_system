@@ -54,6 +54,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# REST_FRAMEWORK = {
+
+#     'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
+# }
+
+
 ROOT_URLCONF = 'comments_service.urls'
 
 TEMPLATES = [

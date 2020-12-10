@@ -19,8 +19,11 @@ urlpatterns = [
         name='post-comment-detail'),
     path('posts/favorites/', PostViewSet.as_view({'get': 'favorite'}), 
         name='post_bookmark'),
-    path('posts/favorites/add', PostViewSet.as_view({'post': 'add_to_favorite'}), 
-        name='post_bookmark_add')
+    path('posts/favorites/add/', PostViewSet.as_view({'post': 'add_to_favorite'}), 
+        name='post_bookmark_add'),
+    path('posts/favorites/delete/', 
+        PostViewSet.as_view({'post': 'delete_from_favorite'}), 
+        name='post_bookmark_delete')
 ]
 
 urlpatterns += router.urls
