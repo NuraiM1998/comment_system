@@ -18,6 +18,7 @@ comments_service/db.sqlite3
 db.sqlite3/
 db.sqlite3
 db.sqlite3.*
+*db.sqlite3
 /.db.sqlite3
 
 .coverage

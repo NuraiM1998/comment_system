@@ -9,5 +9,3 @@ WORKDIR /comments_service
 
 ADD . /comments_service
 RUN pip install -r requirements.txt
-
-
