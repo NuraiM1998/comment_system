@@ -37,7 +37,7 @@ class Post(models.Model):
 
     def __str__(self):
         """Отображение название объекта"""
-        return str(self.title)
+        return self.title
 
     
     def save(self, *args, **kwargs):
