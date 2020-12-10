@@ -1,7 +1,8 @@
 from rest_framework.response import Response
 from rest_framework import status
 
-class ActionFavoriteMixin(object):
+
+class ActionFavoriteMixin:
 
     def action_with_favorite(self, request):
         serializer = self.get_serializer(data=request.data)

@@ -28,7 +28,6 @@ class PostViewSet(ActionFavoriteMixin, viewsets.ModelViewSet):
 
 
     def get_serializer_class(self):
-        print(self.action)
         if self.action == 'favorite':
             return FavoritePostSerializer
         elif self.action == 'add_to_favorite':
