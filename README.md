@@ -1,11 +1,10 @@
-Добавление постов с возможностью добавления комментариев 
-на шаблонной Django и на Django Rest Framework.
 
-Также есть возможность добавлять посты в избранное в апи.
 
-Для запуска проекта использовать эту команду
+Posts app. User is able to add/edit/delete posts and add/remove to favorites.
+
+Feel free to use this app :)
+To run this app use the following command:
 ```docker-compose up -d --build```
 
-
-Для просмотра логов использовать эту команду
+For logs monitoring use the following command: 
 ```docker-compose logs -f```
