@@ -1,6 +1,6 @@
 
 
-Posts app. User is able to add/edit/delete posts and add/remove to favorites.
+**<h1>Comment section app.</h1>** User is able to add/edit/delete posts, add/remove to favorites and obviously leave the comment :)
 
 The app is built using Django Jinja and Django Rest Framework.
 The test coverage is 95%. Pytest used for testing.
